@@ -39,5 +39,7 @@ print(result.follow_up_question)
 
 print(f"\nDIFFICULTY: {result.difficulty}/10")
 
-print("\nUSAGE:")
-print(response.usage)
+print("\nUSAGE")
+print(f"Input tokens: {response.usage.input_tokens}")
+print(f"Output tokens: {response.usage.output_tokens}")
+print(f"Total tokens: {response.usage.total_tokens}")
