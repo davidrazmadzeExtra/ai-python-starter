@@ -36,3 +36,5 @@ for topic in result.topics:
 
 print("\nFOLLOW-UP")
 print(result.follow_up_question)
+
+print(f"\nDIFFICULTY: {result.difficulty}/10")
