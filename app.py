@@ -38,3 +38,6 @@ print("\nFOLLOW-UP")
 print(result.follow_up_question)
 
 print(f"\nDIFFICULTY: {result.difficulty}/10")
+
+print("\nUSAGE:")
+print(response.usage)
