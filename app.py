@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import OpenAI, APIError
 
 from models import LearningResponse
 
@@ -9,37 +9,44 @@ client = OpenAI()
 
 question = input("What would you like to learn? ")
 
-response = client.responses.parse(
-    model="gpt-5.4-mini",
-    instructions="""
-    You are a technical tutor for software engineers.
+try:
+    response = client.responses.parse(
+        model="gpt-5.4-mini",
+        instructions="""
+        You are a technical tutor for software engineers.
 
-    Explain concepts clearly and concisely.
-    Assume the user understands programming.
-    """,
-    input=question,
-    text_format=LearningResponse,
-)
+        Explain concepts clearly and concisely.
+        Assume the user understands programming.
+        """,
+        input=question,
+        text_format=LearningResponse,
+    )
 
-result = response.output_parsed
+    result = response.output_parsed
 
-print("\nANSWER")
-print(result.answer)
+    print("\nANSWER")
+    print(result.answer)
 
-print("\nKEY POINTS")
-for point in result.key_points:
-    print(f"- {point}")
+    print(f"\nDIFFICULTY: {result.difficulty}/10")
 
-print("\nTOPICS")
-for topic in result.topics:
-    print(f"- {topic}")
+    print("\nKEY POINTS")
+    for point in result.key_points:
+        print(f"- {point}")
 
-print("\nFOLLOW-UP")
-print(result.follow_up_question)
+    print("\nTOPICS")
+    for topic in result.topics:
+        print(f"- {topic}")
 
-print(f"\nDIFFICULTY: {result.difficulty}/10")
+    print("\nFOLLOW-UP")
+    print(result.follow_up_question)
 
-print("\nUSAGE")
-print(f"Input tokens: {response.usage.input_tokens}")
-print(f"Output tokens: {response.usage.output_tokens}")
-print(f"Total tokens: {response.usage.total_tokens}")
+    print("\nUSAGE")
+    print(f"Input tokens: {response.usage.input_tokens}")
+    print(f"Output tokens: {response.usage.output_tokens}")
+    print(f"Total tokens: {response.usage.total_tokens}")
+
+except APIError as error:
+    print(f"\nOpenAI API error: {error}")
+
+except Exception as error:
+    print(f"\nUnexpected error: {error}")
