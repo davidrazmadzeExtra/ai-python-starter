@@ -11,7 +11,7 @@ question = input("What would you like to learn? ")
 
 try:
     response = client.responses.parse(
-        model="gpt-5.4-mini",
+        model="gpt-does-not-exist-model",
         instructions="""
         You are a technical tutor for software engineers.
 
